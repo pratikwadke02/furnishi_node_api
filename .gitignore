@@ -1,0 +1,10 @@
+/node_modules
+package-lock.json
+.env
+/Upload
+/.vscode
+assets
+public
+private
+yarn.lock
+*.sh
