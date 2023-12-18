@@ -1,16 +1,8 @@
-module.exports = (sequelize, Sequelize) => {
-    const Status = sequelize.define("status", {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        statusCode: {
-            type: Sequelize.STRING,
-        },
-        status: {
-            type: Sequelize.STRING,
-        },
-    })
-    return Status;
-}
+const sequelize = require('sequelize')
+const dbConnection = require('../utils/dbConnection')
+
+const Status_Model = dbConnection.define('status', {
+    status: sequelize.STRING,
+})
+
+module.exports = Status_Model;

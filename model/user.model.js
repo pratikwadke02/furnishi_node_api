@@ -1,24 +1,12 @@
-module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define("user", {
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      firstName: {
-        type: Sequelize.STRING,
-      },
-      lastName: {
-        type: Sequelize.STRING,
-      },
-      email: {
-        type: Sequelize.STRING,
-      },
-      password: {
-        type: Sequelize.STRING,
-      },
-      
-    });
-    return User;
-  };
+const sequelize = require('sequelize')
+const dbConnection = require('../utils/dbConnection')
+
+const User_Model = dbConnection.define('user', {
+    firstName: sequelize.STRING,
+    lastName: sequelize.STRING,
+    email: sequelize.STRING,
+    password: sequelize.STRING,
+});
+
+module.exports = User_Model;
   

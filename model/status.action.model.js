@@ -1,16 +1,8 @@
-module.exports = (sequelize, Sequelize) => {
-    const StatusAction = sequelize.define("statusAction", {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        statusActionCode: {
-            type: Sequelize.STRING,
-        },
-        statusAction: {
-            type: Sequelize.STRING,
-        },
-    })
-    return StatusAction;
-}
+const sequelize = require('sequelize')
+const dbConnection = require('../utils/dbConnection')
+
+const StatusAction = dbConnection.define("statusAction", {
+    statusAction: sequelize.STRING,
+})
+
+module.exports = StatusAction;

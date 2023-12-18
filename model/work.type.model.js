@@ -1,16 +1,8 @@
-module.exports = (sequelize, Sequelize) => {
-    const WorkType = sequelize.define("workType", {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        workTypeCode: {
-            type: Sequelize.STRING,
-        },
-        workType: {
-            type: Sequelize.STRING,
-        },
-    })
-    return WorkType;
-}
+const sequelize = require('sequelize')
+const dbConnection = require('../utils/dbConnection')
+
+const  WorkType = dbConnection.define('workType', {
+    workType: sequelize.STRING,
+});
+
+module.exports = WorkType;

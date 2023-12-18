@@ -1,16 +1,8 @@
-module.exports = (sequelize, Sequelize) => {
-    const SnagIssue = sequelize.define("snagIssue", {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        issueCode: {
-            type: Sequelize.STRING,
-        },
-        issue: {
-            type: Sequelize.STRING,
-        },
-    })
-    return SnagIssue;
-}
+const sequelize = require('sequelize')
+const dbConnection = require('../utils/dbConnection')
+
+const SnagIssue = dbConnection.define("snagIssue", {
+    issue: sequelize.STRING,
+})
+
+module.exports = SnagIssue;

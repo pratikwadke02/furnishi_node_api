@@ -43,7 +43,7 @@ const dbConnection = require("./utils/dbConnection");
 
 require('./utils/allFurnishiRoutes')(app);
 require('./utils/allAdminRoutes')(app);
-
+require('./utils/allFactoryManagerRoutes')(app);
 //ModelRelationship Define
 require('./utils/allModelRelationship').All_Table_Relationship()
 

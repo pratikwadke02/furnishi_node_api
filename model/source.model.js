@@ -1,37 +1,15 @@
-module.exports = (sequelize, Sequelize) => {
-    const Source = sequelize.define("source", {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        sourceCode: {
-            type: Sequelize.STRING,
-        },
-        source: {
-            type: Sequelize.STRING,
-        },
-        firmName: {
-            type: Sequelize.STRING,
-        },
-        firmAddress: {
-            type: Sequelize.STRING,
-        },
-        emailId: {
-            type: Sequelize.STRING,
-        },
-        contactNumberOne: {
-            type: Sequelize.STRING,
-        },
-        contactNumberTwo: {
-            type: Sequelize.STRING,
-        },
-        cordinatorName: {
-            type: Sequelize.STRING,
-        },
-        cordinatorNumber: {
-            type: Sequelize.STRING,
-        },
-    })
-    return Source;
-}
+const sequelize = require('sequelize')
+const dbConnection = require('../utils/dbConnection')
+
+const Source = dbConnection.define("source", {
+    source: sequelize.STRING,
+    firmName: sequelize.STRING,
+    firmAddress: sequelize.STRING,
+    emailId: sequelize.STRING,
+    contactNumberOne: sequelize.STRING,
+    contactNumberTwo: sequelize.STRING,
+    cordinatorName: sequelize.STRING,
+    cordinatorNumber: sequelize.STRING,
+})
+
+module.exports = Source;
