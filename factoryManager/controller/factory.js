@@ -3,7 +3,7 @@ const All_Models = require('../../utils/allModels');
 const addFactory = async (req, res) => {
     try{
         const {companyName, companyAddress, emailId, contactNumber, website, gstNumber, manager, managerNumber, managerEmailId} = req.body;
-        const newFactory = await All_Models.Factory.create({
+        const newFactory = await All_Models.Factory_Model.create({
             companyName,
             companyAddress,
             emailId,
@@ -27,7 +27,14 @@ const addFactory = async (req, res) => {
 
 const getAllFactory = async (req, res) => {
     try{
-        const allFactory = await All_Models.Factory.findAll();
+        const {id} = req.query;
+        let whereClause = {};
+        if(id){
+            whereClause = {id};
+        }
+        const allFactory = await All_Models.Factory_Model.findAll({
+            where: whereClause
+        });
         res.status(200).json({
             message: "All Factory",
             data: allFactory

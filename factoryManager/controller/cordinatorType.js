@@ -19,7 +19,14 @@ const addCordinatorType = async (req, res) => {
 
 const getAllCordinatorType = async (req, res) => {
     try {
-        const allCordinatorType = await All_Models.CordinatorType.findAll();
+        const {id} = req.query;
+        let whereClause = {};
+        if(id){
+            whereClause = {id};
+        }
+        const allCordinatorType = await All_Models.CordinatorType.findAll({
+            where: whereClause
+        });
         res.status(200).json({
             message: "All CordinatorType",
             data: allCordinatorType

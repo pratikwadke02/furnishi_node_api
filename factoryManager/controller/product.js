@@ -3,8 +3,8 @@ const All_Models = require('../../utils/allModels');
 const addProduct = async (req, res) => {
     try{
         const {productName} = req.body;
-        const newProduct = await All_Models.Product.create({
-            productName
+        const newProduct = await All_Models.Product_Model.create({
+            product:productName
         });
         res.status(200).json({
             message: "Product added successfully",
@@ -19,7 +19,14 @@ const addProduct = async (req, res) => {
 
 const getAllProduct = async (req, res) => {
     try{
-        const allProduct = await All_Models.Product.findAll();
+        const{id}=req.query;
+        let whereClause = {};
+        if(id){
+            whereClause = {id};
+        }
+        const allProduct = await All_Models.Product_Model.findAll({
+            where: whereClause
+        });
         res.status(200).json({
             message: "All Product",
             data: allProduct

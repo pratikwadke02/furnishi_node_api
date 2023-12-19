@@ -26,7 +26,14 @@ const addSource = async (req, res) => {
 
 const getAllSource = async (req, res) => {
     try {
-        const allSource = await All_Models.Source_Model.findAll();
+        const{id}=req.query;
+        let whereClause = {};
+        if(id){
+            whereClause = {id};
+        }
+        const allSource = await All_Models.Source_Model.findAll({
+            where: whereClause
+        });
         res.status(200).json({
             message: "All Source",
             data: allSource
