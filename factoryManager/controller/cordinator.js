@@ -11,6 +11,7 @@ const addCordinator = async (req, res) => {
             sourceId
         });
         res.status(200).json({
+            success: true,
             message: "Cordinator added successfully",
             data: newCordinator
         });

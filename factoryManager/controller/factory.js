@@ -15,6 +15,7 @@ const addFactory = async (req, res) => {
             managerEmailId
         });
         res.status(200).json({
+            success: true,
             message: "Factory added successfully",
             data: newFactory
         });

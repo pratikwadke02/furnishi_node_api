@@ -12,6 +12,7 @@ const addSnagAction = async (req, res) => {
         });
     }
     catch (error) {
+        success: true,
         res.status(500).json({
             error: error.message
         })
@@ -47,6 +48,7 @@ const addSnagIssue = async (req, res) => {
             issue
         });
         res.status(200).json({
+            success: true,
             message: "SnagIssue added successfully",
             data: newSnagIssue
         });
@@ -87,6 +89,7 @@ const addSnagCost = async (req, res) => {
             cost
         });
         res.status(200).json({
+            success: true,
             message: "SnagCost added successfully",
             data: newSnagCost
         });
@@ -127,6 +130,7 @@ const addSnagSolution = async (req, res) => {
             solution
         });
         res.status(200).json({
+            success: true,
             message: "SnagSolution added successfully",
             data: newSnagSolution
         });

@@ -8,6 +8,7 @@ const Factory_Model = dbConnection.define("factory", {
     website: sequelize.STRING,
     gstNumber: sequelize.STRING,
     manager: sequelize.STRING,
+    managerNumber: sequelize.STRING,
     managerEmailId: sequelize.STRING,
 });
 

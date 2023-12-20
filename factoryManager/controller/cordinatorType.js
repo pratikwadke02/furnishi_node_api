@@ -7,6 +7,7 @@ const addCordinatorType = async (req, res) => {
             cordinatorType
         });
         res.status(200).json({
+            success: true,
             message: "CordinatorType added successfully",
             data: newCordinatorType
         });

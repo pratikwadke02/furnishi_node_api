@@ -7,6 +7,7 @@ const addStatus = async (req, res) => {
             status
         });
         res.status(200).json({
+            success: true,
             message: "Status added successfully",
             data: newStatus
         });
@@ -47,6 +48,7 @@ const addStatusAction = async (req, res) => {
             statusAction
         });
         res.status(200).json({
+            success: true,
             message: "StatusAction added successfully",
             data: newStatusAction
         });
