@@ -2,9 +2,10 @@ const All_Models = require('../../utils/allModels');
 
 const addProduct = async (req, res) => {
     try{
-        const {productName} = req.body;
+        const {productName, factoryId } = req.body;
         const newProduct = await All_Models.Product_Model.create({
-            product:productName
+            product:productName,
+            factoryId:factoryId
         });
         res.status(200).json({
             success: true,
@@ -26,7 +27,13 @@ const getAllProduct = async (req, res) => {
             whereClause = {id};
         }
         const allProduct = await All_Models.Product_Model.findAll({
-            where: whereClause
+            where: whereClause,
+            include: [
+                {
+                    model: All_Models.Factory_Model,
+                    attributes: ['companyName']
+                }
+            ]
         });
         res.status(200).json({
             message: "All Product",
