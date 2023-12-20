@@ -8,6 +8,8 @@ const AllEcom_Routes = (app) => {
         require("../factoryManager/routes/factory"),
         require("../factoryManager/routes/status"),
         require("../factoryManager/routes/snag"),
+        require("../factoryManager/routes/master"),
+        require("../factoryManager/routes/location"),
     )
 };
 
