@@ -1,7 +1,9 @@
 const {verifyRole} = require("../middleware/verifyFactoryManager");
+const {tokenVerify} = require("../middleware/tokenVerify");
 const AllFactoryManager_Routes = (app) => {
+    app.use(tokenVerify);
     app.use(
-        verifyRole
+        verifyRole, 
     )
     app.use(
         "/fm",

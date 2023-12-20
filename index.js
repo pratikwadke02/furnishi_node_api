@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
-const { tokenVerify } = require("./middleware/tokenVerify");
 
 const app = express();
 const cors = require("cors");
@@ -47,8 +46,6 @@ app.use((error, req, res, next) => {
 //   req.user = { userId };
 //   next();
 // });//End of setUserMiddleware
-
-app.use(tokenVerify);
 
 const dbConnection = require("./utils/dbConnection");
 
