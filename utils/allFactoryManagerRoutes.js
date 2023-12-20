@@ -7,6 +7,7 @@ const AllEcom_Routes = (app) => {
         require("../factoryManager/routes/product"),
         require("../factoryManager/routes/factory"),
         require("../factoryManager/routes/status"),
+        require("../factoryManager/routes/snag"),
     )
 };
 
