@@ -1,5 +1,6 @@
 const Models = {
-    //factory Manager   
+    //factory Manager
+    FactoryManager_Model: require('../model/factory.manager.model'),   
     
     //master
     Source_Model: require('../model/source.model'),

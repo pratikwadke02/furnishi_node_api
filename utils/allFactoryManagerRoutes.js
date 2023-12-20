@@ -1,4 +1,8 @@
-const AllEcom_Routes = (app) => {
+const {verifyRole} = require("../middleware/verifyFactoryManager");
+const AllFactoryManager_Routes = (app) => {
+    app.use(
+        verifyRole
+    )
     app.use(
         "/fm",
         require("../factoryManager/routes/source"),
@@ -13,4 +17,4 @@ const AllEcom_Routes = (app) => {
     )
 };
 
-module.exports = AllEcom_Routes;
+module.exports = AllFactoryManager_Routes;

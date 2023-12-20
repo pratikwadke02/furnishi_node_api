@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
-const setUserMiddleware = require("./middleware/setUser").default;
+const { tokenVerify } = require("./middleware/tokenVerify");
 
 const app = express();
 const cors = require("cors");
@@ -42,11 +42,13 @@ app.use((error, req, res, next) => {
   res.status(statusCode).json({ message: errorMessage });
 }); //End of error handling middleware
 
-app.use((req, res, next) => {
-  const userId = req.headers["user-id"];
-  req.user = { userId };
-  next();
-});//End of setUserMiddleware
+// app.use((req, res, next) => {
+//   const userId = req.headers["user-id"];
+//   req.user = { userId };
+//   next();
+// });//End of setUserMiddleware
+
+app.use(tokenVerify);
 
 const dbConnection = require("./utils/dbConnection");
 

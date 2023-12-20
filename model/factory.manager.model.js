@@ -1,12 +1,12 @@
 const sequelize = require('sequelize')
 const dbConnection = require('../utils/dbConnection')
 
-const User_Model = dbConnection.define('user', {
+const FactoryManager_Model = dbConnection.define('factoryManager', {
     firstName: sequelize.STRING,
     lastName: sequelize.STRING,
-    email: sequelize.STRING,
+    mobileNumber: sequelize.STRING,
+    emailId: sequelize.STRING,
     password: sequelize.STRING,
 });
 
-module.exports = User_Model;
-  
+module.exports = FactoryManager_Model;

@@ -1,8 +1,8 @@
-const AllEcom_Routes = (app) => {
+const AllFurnishi_Routes = (app) => {
     app.use(
         "/furnishi",
-        require("../furnishi/routes/user")
+        require("../routes/user"),
     )
 };
 
-module.exports = AllEcom_Routes;
+module.exports = AllFurnishi_Routes;
