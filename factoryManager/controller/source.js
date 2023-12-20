@@ -2,6 +2,7 @@ All_Models = require('../../utils/allModels');
 
 const addSource = async (req, res) => {
     try {
+        const factoryManagerId = req.user.userId;
         const { source, firmName, firmAddress, emailId, contactNumberOne, contactNumberTwo } = req.body;
         const newSource = await All_Models.Source_Model.create({
             source,
@@ -10,6 +11,7 @@ const addSource = async (req, res) => {
             emailId,
             contactNumberOne,
             contactNumberTwo,
+            factoryManagerId
         });
         res.status(200).json({
             success: true,
@@ -25,10 +27,11 @@ const addSource = async (req, res) => {
 
 const getAllSource = async (req, res) => {
     try {
+        const factoryManagerId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {};
+        let whereClause = {factoryManagerId};
         if(id){
-            whereClause = {id};
+            whereClause = {id, factoryManagerId};
         }
         const allSource = await All_Models.Source_Model.findAll({
             where: whereClause

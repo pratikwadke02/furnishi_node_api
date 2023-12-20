@@ -2,9 +2,11 @@ const All_Models = require('../../utils/allModels');
 
 const addShutter = async (req, res) => {
     try {
+        const factoryManagerId = req.user.userId;
         const { shutter } = req.body;
         const newShutter = await All_Models.Shutter_Model.create({
-            shutter
+            shutter,
+            factoryManagerId
         });
         res.status(200).json({
             success: true,
@@ -21,10 +23,11 @@ const addShutter = async (req, res) => {
 
 const getAllShutter = async (req, res) => {
     try {
-        const { id } = req.query;
-        let whereClause = {};
-        if (id) {
-            whereClause = { id };
+        const factoryManagerId = req.user.userId;
+        const{id}=req.query;
+        let whereClause = {factoryManagerId};
+        if(id){
+            whereClause = {id, factoryManagerId};
         }
         const allShutter = await All_Models.Shutter_Model.findAll({
             where: whereClause

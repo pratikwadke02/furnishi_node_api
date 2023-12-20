@@ -2,9 +2,11 @@ const All_Models = require('../../utils/allModels');
 
 const addCarCass = async (req, res) => {
     try {
+        const factoryManagerId = req.user.userId;
         const { carcass } = req.body;
         const newCarCass = await All_Models.Carcass_Model.create({
-            carcass
+            carcass,
+            factoryManagerId
         });
         res.status(200).json({
             success: true,
@@ -21,10 +23,11 @@ const addCarCass = async (req, res) => {
 
 const getAllCarCass = async (req, res) => {
     try {
+        const factoryManagerId = req.user.userId;
         const { id } = req.query;
-        let whereClause = {};
+        let whereClause = { factoryManagerId };
         if (id) {
-            whereClause = { id };
+            whereClause = { id , factoryManagerId };
         }
         const allCarCass = await All_Models.Carcass_Model.findAll({
             where: whereClause

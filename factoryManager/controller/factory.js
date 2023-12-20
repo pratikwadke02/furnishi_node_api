@@ -2,6 +2,7 @@ const All_Models = require('../../utils/allModels');
 
 const addFactory = async (req, res) => {
     try{
+        const factoryManagerId = req.user.userId;
         const {companyName, companyAddress, emailId, contactNumber, website, gstNumber, manager, managerNumber, managerEmailId} = req.body;
         const newFactory = await All_Models.Factory_Model.create({
             companyName,
@@ -12,7 +13,8 @@ const addFactory = async (req, res) => {
             gstNumber,
             manager,
             managerNumber,
-            managerEmailId
+            managerEmailId,
+            factoryManagerId
         });
         res.status(200).json({
             success: true,
@@ -28,10 +30,11 @@ const addFactory = async (req, res) => {
 
 const getAllFactory = async (req, res) => {
     try{
-        const {id} = req.query;
-        let whereClause = {};
+        const factoryManagerId = req.user.userId;
+        const{id}=req.query;
+        let whereClause = {factoryManagerId};
         if(id){
-            whereClause = {id};
+            whereClause = {id, factoryManagerId};
         }
         const allFactory = await All_Models.Factory_Model.findAll({
             where: whereClause
@@ -49,9 +52,11 @@ const getAllFactory = async (req, res) => {
 
 const addFactoryEngineer = async (req, res) => {
     try{
+        const factoryManagerId = req.user.userId;
         const {factoryEngineer} = req.body;
         const newFactoryEngineer = await All_Models.FactoryEngineer_Model.create({
-            factoryEngineer
+            factoryEngineer,
+            factoryManagerId
         });
         res.status(200).json({
             success: true,
@@ -68,10 +73,11 @@ const addFactoryEngineer = async (req, res) => {
 
 const getAllFactoryEngineer = async (req, res) => {
     try{
-        const {id} = req.query;
-        let whereClause = {};
+        const factoryManagerId = req.user.userId;
+        const{id}=req.query;
+        let whereClause = {factoryManagerId};
         if(id){
-            whereClause = {id};
+            whereClause = {id, factoryManagerId};
         }
         const allFactoryEngineer = await All_Models.FactoryEngineer_Model.findAll({
             where: whereClause

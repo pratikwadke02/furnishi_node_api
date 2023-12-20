@@ -2,9 +2,11 @@ All_Models = require('../../utils/allModels');
 
 const addStatus = async (req, res) => {
     try {
+        const factoryManagerId = req.user.userId;
         const {status} = req.body;
         const newStatus = await All_Models.Status_Model.create({
-            status
+            status,
+            factoryManagerId
         });
         res.status(200).json({
             success: true,
@@ -21,10 +23,11 @@ const addStatus = async (req, res) => {
 
 const getAllStatus = async (req, res) => {
     try {
-        const {id} = req.query;
-        let whereClause = {};
+        const factoryManagerId = req.user.userId;
+        const{id}=req.query;
+        let whereClause = {factoryManagerId};
         if(id){
-            whereClause = {id};
+            whereClause = {id, factoryManagerId};
         }
         const allStatus = await All_Models.Status_Model.findAll({
             where: whereClause
@@ -43,9 +46,11 @@ const getAllStatus = async (req, res) => {
 
 const addStatusAction = async (req, res) => {
     try {
+        const factoryManagerId = req.user.userId;
         const {statusAction} = req.body;
         const newStatusAction = await All_Models.StatusAction_Model.create({
-            statusAction
+            statusAction,
+            factoryManagerId
         });
         res.status(200).json({
             success: true,
@@ -62,10 +67,11 @@ const addStatusAction = async (req, res) => {
 
 const getAllStatusAction = async (req, res) => {
     try {
-        const {id} = req.query;
-        let whereClause = {};
+        const factoryManagerId = req.user.userId;
+        const{id}=req.query;
+        let whereClause = {factoryManagerId};
         if(id){
-            whereClause = {id};
+            whereClause = {id, factoryManagerId};
         }
         const allStatusAction = await All_Models.StatusAction_Model.findAll({
             where: whereClause

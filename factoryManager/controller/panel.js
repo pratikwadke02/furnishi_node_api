@@ -2,8 +2,8 @@ const All_Models = require('../../utils/allModels');
 
 const addPanel = async (req, res) => {
     try {
+        const factoryManagerId = req.user.userId;
         const { panel , defaultControls } = req.body;
-        console.log(defaultControls);
         const defaultAccess = await All_Models.DefaultPanelControl_Model.create({
             receivedDate: defaultControls.receiveDate,
             targetDate: defaultControls.targetDate,
@@ -57,7 +57,8 @@ const addPanel = async (req, res) => {
         });
         const newPanel = await All_Models.Panel_Model.create({
             panel,
-            defaultPanelControlId: defaultAccess.id
+            defaultPanelControlId: defaultAccess.id,
+            factoryManagerId
         });
         res.status(200).json({
             success: true,
@@ -74,10 +75,11 @@ const addPanel = async (req, res) => {
 
 const getAllPanel = async (req, res) => {
     try {
-        const { id } = req.query;
-        let whereClause = {};
-        if (id) {
-            whereClause = { id };
+        const factoryManagerId = req.user.userId;
+        const{id}=req.query;
+        let whereClause = {factoryManagerId};
+        if(id){
+            whereClause = {id, factoryManagerId};
         }
         const allPanel = await All_Models.Panel_Model.findAll({
             where: whereClause,
