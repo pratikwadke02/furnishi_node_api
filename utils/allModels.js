@@ -23,6 +23,13 @@ const Models = {
     FactoryEngineer_Model: require('../model/factory.engineer.model'),
     Panel_Model: require('../model/panel.model'),
     WorkType_Model: require('../model/work.type.model'),
+
+    //panel control
+    PanelControl_Model: require('../model/panel.control.model'),
+    DefaultPanelControl_Model: require('../model/default.panel.control.model'),
+
+    //assistant user
+    AssistantUser_Model: require('../model/assistant.user.model'),
 }
 
 module.exports = Models;
