@@ -22,6 +22,7 @@ const Models = {
     SiteSurveryor_Model: require('../model/final.site.surveyor.model'),
     FactoryEngineer_Model: require('../model/factory.engineer.model'),
     Panel_Model: require('../model/panel.model'),
+    WorkType_Model: require('../model/work.type.model'),
 }
 
 module.exports = Models;
