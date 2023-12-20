@@ -36,10 +36,10 @@ exports.All_Table_Relationship = async () => {
     try {
 
         await sequelize.sync();
-        console.log('Set Relation Sync Database')
+        console.log('Set Relation Sync Database');
 
 
     } catch(e){
-        console.log("error")
+        console.log("error");
     }
 }
