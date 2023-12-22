@@ -2,11 +2,11 @@ const All_Models = require('../../utils/allModels');
 
 const addSalesPerson = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const { salesPerson } = req.body;
         const newSalesPerson = await All_Models.SalesPerson_Model.create({
             salesPerson,
-            factoryManagerId
+            userId
         });
         res.status(200).json({
             success: true,
@@ -23,11 +23,11 @@ const addSalesPerson = async (req, res) => {
 
 const getAllSalesPerson = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {factoryManagerId};
+        let whereClause = {userId};
         if(id){
-            whereClause = {id, factoryManagerId};
+            whereClause = {id, userId};
         }
         const allSalesPerson = await All_Models.SalesPerson_Model.findAll({
             where: whereClause

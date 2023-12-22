@@ -2,12 +2,12 @@ const All_Models = require('../../utils/allModels');
 
 const addLocation = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const { pincode, name } = req.body;
         const newLocation = await All_Models.Location_Model.create({
             pincode,
             name,
-            factoryManagerId
+            userId
         });
         res.status(200).json({
             success: true,
@@ -25,11 +25,11 @@ const addLocation = async (req, res) => {
 
 const getAllLocation = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {factoryManagerId};
+        let whereClause = {userId};
         if(id){
-            whereClause = {id, factoryManagerId};
+            whereClause = {id, userId};
         }
         const allLocation = await All_Models.Location_Model.findAll({
             where: whereClause

@@ -2,11 +2,11 @@ const All_Models = require('../../utils/allModels');
 
 const addWorkType = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const { workType } = req.body;
         const newWorkType = await All_Models.WorkType_Model.create({
             workType,
-            factoryManagerId
+            userId
         });
         res.status(200).json({
             success: true,
@@ -23,11 +23,11 @@ const addWorkType = async (req, res) => {
 
 const getAllWorkType = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {factoryManagerId};
+        let whereClause = {userId};
         if(id){
-            whereClause = {id, factoryManagerId};
+            whereClause = {id, userId};
         }
         const allWorkType = await All_Models.WorkType_Model.findAll({
             where: whereClause

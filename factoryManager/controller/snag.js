@@ -2,11 +2,11 @@ All_Models = require('../../utils/allModels');
 
 const addSnagAction = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const { action } = req.body;
         const newSnagAction = await All_Models.SnagAction_Model.create({
             action,
-            factoryManagerId
+            userId
         });
         res.status(200).json({
             success: true,
@@ -23,11 +23,11 @@ const addSnagAction = async (req, res) => {
 
 const getAllSnagAction = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {factoryManagerId};
+        let whereClause = {userId};
         if(id){
-            whereClause = {id, factoryManagerId};
+            whereClause = {id, userId};
         }
         const allSnagAction = await All_Models.SnagAction_Model.findAll({
             where: whereClause
@@ -46,11 +46,11 @@ const getAllSnagAction = async (req, res) => {
 
 const addSnagIssue = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const { issue } = req.body;
         const newSnagIssue = await All_Models.SnagIssue_Model.create({
             issue,
-            factoryManagerId
+            userId
         });
         res.status(200).json({
             success: true,
@@ -67,11 +67,11 @@ const addSnagIssue = async (req, res) => {
 
 const getAllSnagIssue = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {factoryManagerId};
+        let whereClause = {userId};
         if(id){
-            whereClause = {id, factoryManagerId};
+            whereClause = {id, userId};
         }
         const allSnagIssue = await All_Models.SnagIssue_Model.findAll({
             where: whereClause
@@ -90,11 +90,11 @@ const getAllSnagIssue = async (req, res) => {
 
 const addSnagCost = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const { cost } = req.body;
         const newSnagCost = await All_Models.SnagCost_Model.create({
             cost,
-            factoryManagerId
+            userId
         });
         res.status(200).json({
             success: true,
@@ -111,11 +111,11 @@ const addSnagCost = async (req, res) => {
 
 const getAllSnagCost = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {factoryManagerId};
+        let whereClause = {userId};
         if(id){
-            whereClause = {id, factoryManagerId};
+            whereClause = {id, userId};
         }
         const allSnagCost = await All_Models.SnagCost_Model.findAll({
             where: whereClause
@@ -134,11 +134,11 @@ const getAllSnagCost = async (req, res) => {
 
 const addSnagSolution = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const { solution } = req.body;
         const newSnagSolution = await All_Models.SnagSolution_Model.create({
             solution,
-            factoryManagerId
+            userId
         });
         res.status(200).json({
             success: true,
@@ -155,11 +155,11 @@ const addSnagSolution = async (req, res) => {
 
 const getAllSnagSolution = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {factoryManagerId};
+        let whereClause = {userId};
         if(id){
-            whereClause = {id, factoryManagerId};
+            whereClause = {id, userId};
         }
         const allSnagSolution = await All_Models.SnagSolution_Model.findAll({
             where: whereClause

@@ -2,7 +2,7 @@ const All_Models = require('../../utils/allModels');
 
 const addCordinator = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const { name, number, emailId, cordinatorTypeId, sourceId } = req.body;
         const newCordinator = await All_Models.Cordinator_Model.create({
             name,
@@ -10,7 +10,7 @@ const addCordinator = async (req, res) => {
             emailId,
             cordinatorTypeId,
             sourceId,
-            factoryManagerId
+            userId
         });
         res.status(200).json({
             success: true,
@@ -26,11 +26,11 @@ const addCordinator = async (req, res) => {
 
 const getAllCordinator = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {factoryManagerId};
+        let whereClause = {userId};
         if(id){
-            whereClause = {id, factoryManagerId};
+            whereClause = {id, userId};
         }
         const allCordinator = await All_Models.Cordinator_Model.findAll({
             where: whereClause,

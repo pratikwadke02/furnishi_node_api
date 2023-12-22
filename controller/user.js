@@ -6,17 +6,26 @@ exports.signup = async (req, res) => {
     try{
         const {firstName, lastName, mobileNumber, emailId, password, role} = req.body;
         const hashPassword = await bcrypt.hash(password, 12);
-        let user;
-        if(role==="factoryManager"){
-            user = await AllModels.FactoryManager_Model.create({
-                firstName,
-                lastName,
+        let user = await AllModels.User_Model.findOne({
+            where: {
                 mobileNumber,
                 emailId,
-                password: hashPassword,
-            });
+                role,
+            }
+        });
+        if(user){
+            return res.status(400).json({error: "User already exists"});
         }
-        res.status(201).json({message: "User created successfully"});
+        user = await AllModels.User_Model.create({
+            firstName,
+            lastName,
+            mobileNumber,
+            emailId,
+            password: hashPassword,
+            role,
+        });
+
+        res.status(201).json({success:true, message: "User created successfully"});
     }catch(error){
         console.log(error);
         res.status(500).json({error: error.message});
@@ -29,14 +38,12 @@ exports.login = async (req, res) => {
         if(!emailId || !password){
             return res.status(400).json({error: "Please fill all the fields"});
         }
-        let user;
-        if(role==="factoryManager"){
-            user = await AllModels.FactoryManager_Model.findOne({
-                where: {
-                    emailId,
-                }
-            });
-        }
+        let user = await AllModels.User_Model.findOne({
+            where: {
+                emailId,
+                role,
+            }
+        });
         if(!user){
             return res.status(404).json({error: "User not found"});
         }
@@ -60,11 +67,11 @@ exports.login = async (req, res) => {
 
         res.status(200).json({
             message: "Login Successful",
-            role,
             user: {
                 id: user.id,
                 firstName: user.firstName,
                 lastName: user.lastName,
+                role: user.role,
                 mobileNumber: user.mobileNumber,
                 emailId: user.emailId,
             }

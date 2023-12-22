@@ -2,11 +2,11 @@ const All_Models = require('../../utils/allModels');
 
 const addFinalSiteSurveyor = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const { siteSurveyor } = req.body;
         const newFinalSiteSurveyor = await All_Models.SiteSurveryor_Model.create({
             siteSurveyor,
-            factoryManagerId
+            userId
         });
         res.status(200).json({
             success: true,
@@ -23,11 +23,11 @@ const addFinalSiteSurveyor = async (req, res) => {
 
 const getAllFinalSiteSurveyor = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {factoryManagerId};
+        let whereClause = {userId};
         if(id){
-            whereClause = {id, factoryManagerId};
+            whereClause = {id, userId};
         }
         const allFinalSiteSurveyor = await All_Models.SiteSurveryor_Model.findAll({
             where: whereClause

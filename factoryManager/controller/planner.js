@@ -2,11 +2,11 @@ const All_Models = require('../../utils/allModels');
 
 const addPlanner = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const { planner } = req.body;
         const newPlanner = await All_Models.Planner_Model.create({
             planner,
-            factoryManagerId
+            userId
         });
         res.status(200).json({
             success: true,
@@ -23,11 +23,11 @@ const addPlanner = async (req, res) => {
 
 const getAllPlanner = async (req, res) => {
     try {
-        const factoryManagerId = req.user.userId;
+        const userId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {factoryManagerId};
+        let whereClause = {userId};
         if(id){
-            whereClause = {id, factoryManagerId};
+            whereClause = {id, userId};
         }
         const allPlanner = await All_Models.Planner_Model.findAll({
             where: whereClause
