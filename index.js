@@ -31,6 +31,10 @@ app.get("/cors", (req, res) => {
   res.send("Hello World!");
 });
 
+app.get("/", (req, res) => {
+  return res.send({ message: "Welcome to API" });
+});
+
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || res.statusCode || 500;
   const errorMessage = error.message || error;
@@ -55,10 +59,6 @@ require("./utils/allFactoryManagerRoutes")(app);
 //ModelRelationship Define
 require("./utils/allModelRelationship").All_Table_Relationship();
 
-app.get("/", (req, res) => {
-  // console.log(req);
-  return res.send({ message: "Welcome to API" });
-});
 
 dbConnection.sync();
 
