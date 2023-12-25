@@ -73,6 +73,9 @@ exports.All_Table_Relationship = async () => {
     Models.WorkType_Model.belongsTo(Models.User_Model);
     Models.User_Model.hasMany(Models.WorkType_Model);
 
+    Models.DefaultRoleManager_Model.belongsTo(Models.User_Model);
+    Models.User_Model.hasMany(Models.DefaultRoleManager_Model);
+
     // Cordinator has Cordiantor Type
     // Cordinator has Source
     Models.Cordinator_Model.belongsTo(Models.CordinatorType);
@@ -96,6 +99,10 @@ exports.All_Table_Relationship = async () => {
     //panel has default panel
     Models.Panel_Model.belongsTo(Models.DefaultPanelControl_Model);
     Models.DefaultPanelControl_Model.hasMany(Models.Panel_Model);
+
+    //role has default panel
+    Models.DefaultRoleManager_Model.belongsTo(Models.DefaultPanelControl_Model);
+    Models.DefaultPanelControl_Model.hasMany(Models.DefaultRoleManager_Model);
 
     try {
 

@@ -34,6 +34,7 @@ const Models = {
     //panel control
     PanelControl_Model: require('../model/panel.control.model'),
     DefaultPanelControl_Model: require('../model/default.panel.control.model'),
+    DefaultRoleManager_Model: require('../model/default.role.model'),
 
     //assistant user
     AssistantUser_Model: require('../model/assistant.user.model'),

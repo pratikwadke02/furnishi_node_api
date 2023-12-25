@@ -1,8 +1,8 @@
 const sequelize = require('sequelize')
 const dbConnection = require('../utils/dbConnection')
 
-const Panel_Model = dbConnection.define("panel", {
-    panel: sequelize.STRING,
+const DefaultRoleManager_Model = dbConnection.define("defaultRoleManager", {
+    role: sequelize.STRING,
 })
 
-module.exports = Panel_Model;
+module.exports = DefaultRoleManager_Model;
