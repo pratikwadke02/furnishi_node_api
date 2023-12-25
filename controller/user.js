@@ -1,6 +1,9 @@
 const AllModels = require("../utils/allModels");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { SEND_Mail, Send_Mail } = require("../utils/SendMail");
+const OTP_GEN = require("../utils/OtpGen");
+
 
 exports.signup = async (req, res) => {
     try{
@@ -70,6 +73,118 @@ exports.login = async (req, res) => {
         });
 
         res.status(200).json({
+            message: "Login Successful",
+            user: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                role: user.role,
+                mobileNumber: user.mobileNumber,
+                emailId: user.emailId,
+            },
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        });
+    }catch(error){
+        console.log(error);
+        res.status(500).json({error: error.message});
+    }
+}
+
+exports.userEmailLogin = async (req, res, next) => {
+    try{
+        const {emailId, role, } = req.body;
+        let storedOtp = await AllModels.Otp_Model.findOne({
+            where: {
+                emailId,
+                role,
+            }
+        });
+        const {otp, expiryDatetime} = OTP_GEN.OTP_GENERATE();
+        if(!otp){
+            return res.status(500).json({ errors: "Something went wrong. Please try again" });
+        }
+        console.log(expiryDatetime);
+        if(storedOtp){
+            storedOtp.otp = otp;
+            storedOtp.expiryTime = expiryDatetime;
+            await storedOtp.save();
+        }
+        else{
+            await AllModels.Otp_Model.create({
+                emailId,
+                role,
+                otp,
+                expiryTime,
+            });
+        }
+        const subject = "OTP for Login";
+        const body = `Your OTP for login is ${otp}`;
+        // const sendMail = await Send_Mail(emailId, null, subject, body);
+        // if(!sendMail){
+        //     return res.status(500).json({ errors: "Something went wrong. Please try again" });
+        // }
+        res.status(200).json({message: "OTP sent successfully", otp: otp});
+    }catch(error){
+        console.log(error);
+        res.status(500).json({error: error.message});
+    }
+}
+
+exports.verifyOtp = async (req, res, next) => {
+    try{
+        const{emailId, role, otp} = req.body;
+        let whereClause = {};
+        if(emailId){
+            whereClause.emailId = emailId;
+        }else{
+            return res.status(400).json({error: "EmailId is required"});
+        }
+        if(role){
+            whereClause.role = role;
+        }else{
+            return res.status(400).json({error: "Role is required"});
+        }
+        let storedOtp = await AllModels.Otp_Model.findOne({
+            where: whereClause
+        });
+        if(!storedOtp){
+            return res.status(404).json({error: "OTP not matched"});
+        }
+        if(storedOtp.expiryTime < Date.now()){
+            return res.status(404).json({error: "OTP expired"});
+        }
+
+        let user = await AllModels.User_Model.findOne({
+            where: {
+                emailId,
+                role,
+            }
+        });
+
+        if(!user){
+            return res.status(404).json({error: "User not found"});
+        }
+
+        const accessToken = jwt.sign({userId: user.id, role: role, emailId: user.emailId}, process.env.JWT_SECRET, {expiresIn: "30d"});
+
+        const refreshToken = jwt.sign({userId: user.id, role: role, emailId: user.emailId}, process.env.JWT_REFRESH_SECRET, {expiresIn: "30d"});
+
+        res.cookie("RTjwt", refreshToken, {
+            httpOnly: true,
+            maxAge: 30*24*60*60*1000, //30 days
+            sameSite: "none",
+            secure: true,
+        });
+
+        res.cookie("ATjwt", accessToken, {
+            httpOnly: true,
+            maxAge: 30*24*60*60*1000, //30 days
+            sameSite: "none",
+            secure: true,
+        });
+
+        return res.status(200).json({
             message: "Login Successful",
             user: {
                 id: user.id,

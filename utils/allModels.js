@@ -1,6 +1,9 @@
 const Models = {
     //user 
     User_Model: require('../model/user.model'),
+
+    //auth
+    Otp_Model: require('../model/otp.model'),
     
     //factory Manager
     FactoryManager_Model: require('../model/factory.manager.model'),   
