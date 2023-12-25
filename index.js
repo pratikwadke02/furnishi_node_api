@@ -9,9 +9,20 @@ const cors = require("cors");
 require("dotenv").config();
 app.use(
   cors({
+    origin: [
+      "http://localhost:3000"
+    ],
     credentials: true,
   })
 );
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  next();
+});
 
 app.use(cookieParser());
 app.use(fileUpload({ createParentPath: true }));
@@ -44,12 +55,6 @@ app.use((error, req, res, next) => {
 
   res.status(statusCode).json({ message: errorMessage });
 }); //End of error handling middleware
-
-// app.use((req, res, next) => {
-//   const userId = req.headers["user-id"];
-//   req.user = { userId };
-//   next();
-// });//End of setUserMiddleware
 
 const dbConnection = require("./utils/dbConnection");
 

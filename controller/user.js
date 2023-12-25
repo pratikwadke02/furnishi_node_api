@@ -58,11 +58,15 @@ exports.login = async (req, res) => {
         res.cookie("RTjwt", refreshToken, {
             httpOnly: true,
             maxAge: 30*24*60*60*1000, //30 days
+            sameSite: "none",
+            secure: true,
         });
 
         res.cookie("ATjwt", accessToken, {
             httpOnly: true,
             maxAge: 30*24*60*60*1000, //30 days
+            sameSite: "none",
+            secure: true,
         });
 
         res.status(200).json({
@@ -74,7 +78,9 @@ exports.login = async (req, res) => {
                 role: user.role,
                 mobileNumber: user.mobileNumber,
                 emailId: user.emailId,
-            }
+            },
+            accessToken: accessToken,
+            refreshToken: refreshToken
         });
     }catch(error){
         console.log(error);
