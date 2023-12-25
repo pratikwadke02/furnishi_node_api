@@ -3,7 +3,7 @@ All_Models = require('../../utils/allModels');
 const addSource = async (req, res) => {
     try {
         const userId = req.user.userId;
-        const { source, firmName, firmAddress, emailId, contactNumberOne, contactNumberTwo } = req.body;
+        const { source, firmName, firmAddress, emailId, contactNumberOne, contactNumberTwo, cordinatorName, cordinatorNumber } = req.body;
         const newSource = await All_Models.Source_Model.create({
             source,
             firmName,
@@ -11,6 +11,8 @@ const addSource = async (req, res) => {
             emailId,
             contactNumberOne,
             contactNumberTwo,
+            cordinatorName,
+            cordinatorNumber,
             userId
         });
         res.status(200).json({
