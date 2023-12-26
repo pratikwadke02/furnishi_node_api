@@ -115,7 +115,7 @@ exports.userEmailLogin = async (req, res, next) => {
                 emailId,
                 role,
                 otp,
-                expiryTime,
+                expiryTime: expiryDatetime,
             });
         }
         const subject = "OTP for Login";
