@@ -88,13 +88,19 @@ exports.All_Table_Relationship = async () => {
     Models.Product_Model.belongsTo(Models.Factory_Model);
     Models.Factory_Model.hasMany(Models.Product_Model);
 
-    // assistant user has panel
     // assistant user has panel control
-    Models.AssistantUser_Model.belongsTo(Models.Panel_Model);
-    Models.Panel_Model.hasMany(Models.AssistantUser_Model);
+    // assistant user has default role
+    // assistant user belongs to user
+    Models.AssistantUser_Model.belongsTo(Models.DefaultRoleManager_Model);
+    Models.DefaultRoleManager_Model.hasMany(Models.AssistantUser_Model);
 
     Models.AssistantUser_Model.belongsTo(Models.PanelControl_Model);
     Models.PanelControl_Model.hasMany(Models.AssistantUser_Model);
+
+    Models.AssistantUser_Model.belongsTo(Models.User_Model);
+    Models.User_Model.hasMany(Models.AssistantUser_Model);
+
+
 
     //panel has default panel
     Models.Panel_Model.belongsTo(Models.DefaultPanelControl_Model);
@@ -103,7 +109,7 @@ exports.All_Table_Relationship = async () => {
     //role has default panel
     Models.DefaultRoleManager_Model.belongsTo(Models.DefaultPanelControl_Model);
     Models.DefaultPanelControl_Model.hasMany(Models.DefaultRoleManager_Model);
-
+    
     try {
 
         await sequelize.sync();
