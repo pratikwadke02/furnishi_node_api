@@ -20,6 +20,7 @@ const AllFactoryManager_Routes = (app) => {
         require("../factoryManager/routes/assistantUser"),
         require("../factoryManager/routes/enquiry"),
         require("../factoryManager/routes/order"),
+        require("../factoryManager/routes/dashboard"),
     )
 };
 

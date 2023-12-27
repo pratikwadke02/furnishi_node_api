@@ -95,6 +95,7 @@ const addOrder = async (req, res) => {
       });
     }
     return res.status(200).json({
+      success: true,
       message: "Order added successfully",
       order: newOrder,
     });
@@ -181,8 +182,32 @@ const getAllOrder = async (req, res) => {
       ],
     });
     res.status(200).json({
+      success: true,
       message: "All Orders",
       data: allOrder,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+const getOrdersCount = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const { orderStatus } = req.query;
+    let whereClause = { userId };
+    if (orderStatus) {
+      whereClause = { userId, orderStatus };
+    }
+    const orderCount = await All_Models.Order_Model.count({
+      where: whereClause,
+    });
+    res.status(200).json({
+      success: true,
+      message: "Order count",
+      data: orderCount,
     });
   } catch (error) {
     res.status(500).json({
@@ -194,4 +219,5 @@ const getAllOrder = async (req, res) => {
 module.exports = {
   addOrder,
   getAllOrder,
+  getOrdersCount,
 };
