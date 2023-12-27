@@ -109,10 +109,13 @@ const addOrder = async (req, res) => {
 const getAllOrder = async (req, res) => {
   try {
     const { userId } = req.user;
-    const { id } = req.params;
+    const { id, orderStatus } = req.query;
     let whereClause = { userId };
     if (id) {
       whereClause = { id, userId };
+    }
+    if (orderStatus) {
+      whereClause = { userId, orderStatus };
     }
     const allOrder = await All_Models.Order_Model.findAll({
       where: whereClause,
