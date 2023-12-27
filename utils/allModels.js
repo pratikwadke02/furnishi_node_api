@@ -38,6 +38,15 @@ const Models = {
 
     //assistant user
     AssistantUser_Model: require('../model/assistant.user.model'),
+
+    //order
+    Order_Model: require('../model/order.model'),
+
+    //order history
+    OrderHistory_Model: require('../model/order.history.model'),
+
+    //enquiry
+    Enquiry_Model: require('../model/enquiry.model'),
 }
 
 module.exports = Models;

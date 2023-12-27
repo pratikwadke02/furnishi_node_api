@@ -18,6 +18,7 @@ const AllFactoryManager_Routes = (app) => {
         require("../factoryManager/routes/location"),
         require("../factoryManager/routes/defaultRoleManager"),
         require("../factoryManager/routes/assistantUser"),
+        require("../factoryManager/routes/enquiry"),
     )
 };
 
