@@ -23,6 +23,7 @@ const addCordinatorType = async (req, res) => {
 const getAllCordinatorType = async (req, res) => {
     try {
         const{id}=req.query;
+        let whereClause = {};
         if(id){
             whereClause = {id};
         }
