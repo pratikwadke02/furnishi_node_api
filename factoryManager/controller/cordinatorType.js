@@ -22,11 +22,9 @@ const addCordinatorType = async (req, res) => {
 
 const getAllCordinatorType = async (req, res) => {
     try {
-        const userId = req.user.userId;
         const{id}=req.query;
-        let whereClause = {userId};
         if(id){
-            whereClause = {id, userId};
+            whereClause = {id};
         }
         const allCordinatorType = await All_Models.CordinatorType.findAll({
             where: whereClause

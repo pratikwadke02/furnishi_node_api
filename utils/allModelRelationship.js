@@ -13,9 +13,6 @@ exports.All_Table_Relationship = async () => {
     Models.Source_Model.belongsTo(Models.User_Model);
     Models.User_Model.hasMany(Models.Source_Model);
 
-    Models.CordinatorType.belongsTo(Models.User_Model);
-    Models.User_Model.hasMany(Models.CordinatorType);
-
     Models.Cordinator_Model.belongsTo(Models.User_Model);
     Models.User_Model.hasMany(Models.Cordinator_Model);
 
