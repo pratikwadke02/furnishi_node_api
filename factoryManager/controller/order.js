@@ -216,8 +216,49 @@ const getOrdersCount = async (req, res) => {
   }
 };
 
+const assignOrder = async (req, res) => {
+  try{
+    const {userId} = req.user;
+    const {orderId, assistantUserId} = req.body;
+    const order = await All_Models.Order_Model.findOne({
+      where: {
+        id: orderId,
+        userId
+      }
+    });
+    if(!order){
+      return res.status(400).json({
+        message: "Order not found"
+      });
+    }
+    const assistantUser = await All_Models.User_Model.findOne({
+      where: {
+        id: assistantUserId,
+      }
+    });
+    if(!assistantUser){
+      return res.status(400).json({
+        message: "Assistant user not found"
+      });
+    }
+    const assignedOrder = await All_Models.AssistantUserOrder_Model.create({
+      orderId,
+      assistantUserId
+    });
+    res.status(200).json({
+      message: "Order assigned successfully",
+      data: assignedOrder
+    });
+  }catch(error){
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   addOrder,
   getAllOrder,
   getOrdersCount,
+  assignOrder,
 };

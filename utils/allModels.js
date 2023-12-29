@@ -38,6 +38,7 @@ const Models = {
 
     //assistant user
     AssistantUser_Model: require('../model/assistant.user.model'),
+    AssistantUserOrder_Model: require('../model/assistant.user.order.model'),
 
     //order
     Order_Model: require('../model/order.model'),

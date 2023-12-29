@@ -144,10 +144,10 @@ exports.All_Table_Relationship = async () => {
     //make another table and relate assistant user with order as one order can be assigned to multiple assistant user and one assistant user can have multiple orders
 
     Models.Order_Model.belongsToMany(Models.AssistantUser_Model, {
-        through: "assistantUserOrder",
+        through: { model: Models.AssistantUserOrder_Model, unique: false}
     });
     Models.AssistantUser_Model.belongsToMany(Models.Order_Model, {
-        through: "assistantUserOrder",
+        through: { model: Models.AssistantUserOrder_Model, unique: false}
     });
 
     //order history belongs to user as updated by
