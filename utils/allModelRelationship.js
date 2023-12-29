@@ -181,6 +181,64 @@ exports.All_Table_Relationship = async () => {
     Models.Enquiry_Model.belongsTo(Models.Product_Model);
     Models.Product_Model.hasMany(Models.Enquiry_Model);
 
+    //snaglist belongs to user
+    //snaglist belongs to location
+    //snaglist belongs to cordinator as customer cordinator
+    //snaglist belongs to cordinator as factory cordinator
+    //snaglist belongs to cordinator as source cordinator
+    //snaglist belongs to product
+    //snaglist belongs to snag issue
+    //snaglist belongs to snag solution
+    //snaglist belongs to snag action
+    //snaglist belongs to snag cost
+    //snaglist belongs to status
+    //snaglist belongs to snaglist history and snaglist history belongs to snaglist
+
+    Models.Snaglist_Model.belongsTo(Models.User_Model);
+    Models.User_Model.hasMany(Models.Snaglist_Model);
+
+    Models.Snaglist_Model.belongsTo(Models.Location_Model);
+    Models.Location_Model.hasMany(Models.Snaglist_Model);
+
+    Models.Snaglist_Model.belongsTo(Models.Cordinator_Model, {
+        as: "customerCordinator",
+    });
+
+    Models.Snaglist_Model.belongsTo(Models.Cordinator_Model, {
+        as: "factoryCordinator",
+    });
+
+    Models.Snaglist_Model.belongsTo(Models.Cordinator_Model, {
+        as: "sourceCordinator",
+    });
+
+    Models.Snaglist_Model.belongsTo(Models.Product_Model);
+    Models.Product_Model.hasMany(Models.Snaglist_Model);    
+
+    Models.Snaglist_Model.belongsTo(Models.SnagIssue_Model);
+    Models.SnagIssue_Model.hasMany(Models.Snaglist_Model);
+
+    Models.Snaglist_Model.belongsTo(Models.SnagSolution_Model);
+    Models.SnagSolution_Model.hasMany(Models.Snaglist_Model);
+
+    Models.Snaglist_Model.belongsTo(Models.SnagAction_Model);
+    Models.SnagAction_Model.hasMany(Models.Snaglist_Model);
+
+    Models.Snaglist_Model.belongsTo(Models.SnagCost_Model);
+    Models.SnagCost_Model.hasMany(Models.Snaglist_Model);
+
+    Models.Snaglist_Model.belongsTo(Models.Status_Model);
+    Models.Status_Model.hasMany(Models.Snaglist_Model);
+
+    Models.Snaglist_Model.hasMany(Models.SnaglistHistory_Model);
+    Models.SnaglistHistory_Model.belongsTo(Models.Snaglist_Model);
+
+    //snaglist history belongs to user as updated by
+
+    Models.SnaglistHistory_Model.belongsTo(Models.User_Model, {
+        as: "updatedBy",
+    });
+
     
     try {
 

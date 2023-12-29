@@ -42,11 +42,15 @@ const Models = {
     //order
     Order_Model: require('../model/order.model'),
 
-    //order history
+    //history
     OrderHistory_Model: require('../model/order.history.model'),
+    SnaglistHistory_Model: require('../model/snaglist.history.model'),
 
     //enquiry
     Enquiry_Model: require('../model/enquiry.model'),
+
+    //snaglist
+    Snaglist_Model: require('../model/snaglist.model'),
 }
 
 module.exports = Models;

@@ -24,6 +24,7 @@ const  Snaglist_Model = dbConnection.define('snaglist', {
     actualCost: sequelize.STRING,
     expenseTillDate: sequelize.STRING,
     estimatedQuoteAfterDiscount: sequelize.STRING,
+    snaglistStatus: sequelize.ENUM('open', 'close', 'cancel'),
 })
 
 module.exports = Snaglist_Model;
