@@ -51,6 +51,9 @@ const Models = {
 
     //snaglist
     Snaglist_Model: require('../model/snaglist.model'),
+
+    //orderlist
+    Orderlist_Model: require('../model/orderlist.model'),
 }
 
 module.exports = Models;

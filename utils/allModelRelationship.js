@@ -239,6 +239,67 @@ exports.All_Table_Relationship = async () => {
         as: "updatedBy",
     });
 
+    //orderlist belongs to user
+    //orderlist belongs to source
+    //orderlist belongs to cordiantor as source cordinator
+    //orderlist belongs to cordiantor as factory cordinator
+    //orderlist belongs to cordiantor as customer cordinator
+    //orderlist belongs to product
+    //orderlist belongs to location
+    //orderlist belongs to status
+    //orderlist belongs to carcass
+    //orderlist belongs to shutter
+    //orderlist belongs to designer
+    //orderlist belongs to final site surveyor
+    //orderlist belongs to factory engineer
+    //orderlist belongs to sales person
+
+    Models.Orderlist_Model.belongsTo(Models.User_Model);
+    Models.User_Model.hasMany(Models.Orderlist_Model);
+
+    Models.Orderlist_Model.belongsTo(Models.Source_Model);
+    Models.Source_Model.hasMany(Models.Orderlist_Model);
+
+    Models.Orderlist_Model.belongsTo(Models.Cordinator_Model, {
+        as: "sourceCordinator",
+    });
+
+    Models.Orderlist_Model.belongsTo(Models.Cordinator_Model, {
+        as: "factoryCordinator",
+    });
+
+    Models.Orderlist_Model.belongsTo(Models.Cordinator_Model, {
+        as: "customerCordinator",
+    });
+
+    Models.Orderlist_Model.belongsTo(Models.Product_Model);
+    Models.Product_Model.hasMany(Models.Orderlist_Model);
+
+    Models.Orderlist_Model.belongsTo(Models.Location_Model);
+    Models.Location_Model.hasMany(Models.Orderlist_Model);
+
+    Models.Orderlist_Model.belongsTo(Models.Status_Model);
+    Models.Status_Model.hasMany(Models.Orderlist_Model);
+
+    Models.Orderlist_Model.belongsTo(Models.Carcass_Model);
+    Models.Carcass_Model.hasMany(Models.Orderlist_Model);
+
+    Models.Orderlist_Model.belongsTo(Models.Shutter_Model);
+    Models.Shutter_Model.hasMany(Models.Orderlist_Model);
+
+    Models.Orderlist_Model.belongsTo(Models.Designer_Model);
+    Models.Designer_Model.hasMany(Models.Orderlist_Model);
+
+
+    Models.Orderlist_Model.belongsTo(Models.SiteSurveryor_Model);
+    Models.SiteSurveryor_Model.hasMany(Models.Orderlist_Model);
+
+    Models.Orderlist_Model.belongsTo(Models.FactoryEngineer_Model);
+    Models.FactoryEngineer_Model.hasMany(Models.Orderlist_Model);
+
+    Models.Orderlist_Model.belongsTo(Models.SalesPerson_Model);
+    Models.SalesPerson_Model.hasMany(Models.Orderlist_Model);
+
     
     try {
 
