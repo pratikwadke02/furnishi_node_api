@@ -91,7 +91,7 @@ const addOrder = async (req, res) => {
     if (newOrder) {
       const orderHistory = await All_Models.OrderHistory_Model.create({
         orderId: newOrder.id,
-        updatedBy: userId,
+        updatedById: userId,
       });
     }
     return res.status(200).json({

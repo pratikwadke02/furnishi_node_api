@@ -113,7 +113,7 @@ const addSnaglist = async (req, res) => {
     if (newSnaglist) {
       const snaglistHistory = await All_Models.SnaglistHistory_Model.create({
         snaglistId: newSnaglist.id,
-        updatedBy: userId,
+        updatedById: userId,
       });
     }
     res.status(200).json({
