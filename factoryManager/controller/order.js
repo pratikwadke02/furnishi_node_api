@@ -179,6 +179,13 @@ const getAllOrder = async (req, res) => {
             },
           ],
         },
+        {
+          model: All_Models.AssistantUser_Model,
+          through: {
+            model: All_Models.AssistantUserOrder_Model,
+            as: "assistantUserOrder",
+          },
+        },
       ],
     });
     res.status(200).json({
@@ -187,6 +194,7 @@ const getAllOrder = async (req, res) => {
       data: allOrder,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       error: error.message,
     });
