@@ -55,6 +55,9 @@ const Models = {
 
     //orderlist
     Orderlist_Model: require('../model/orderlist.model'),
+
+    //settings
+    Setting_Model: require('../model/settings.model'),
 }
 
 module.exports = Models;

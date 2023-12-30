@@ -28,6 +28,12 @@ exports.signup = async (req, res) => {
             role,
         });
 
+        if(user){
+            const setting = await AllModels.Setting_Model.create({
+                userId: user.id,
+            });
+        }
+        
         res.status(201).json({success:true, message: "User created successfully"});
     }catch(error){
         console.log(error);

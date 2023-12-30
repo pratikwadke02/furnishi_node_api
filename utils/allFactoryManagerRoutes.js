@@ -25,6 +25,7 @@ const AllFactoryManager_Routes = (app) => {
         require("../factoryManager/routes/orderlist"),
         require("../factoryManager/routes/history"),
         require("../factoryManager/routes/assignOrder"),
+        require("../factoryManager/routes/setting"),
     )
 };
 
