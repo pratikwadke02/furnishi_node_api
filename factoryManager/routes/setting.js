@@ -7,5 +7,6 @@ router.put('/logo', setting.logo);
 router.put('/colors', setting.colors);
 router.put('/fontSize', setting.fontSize);
 router.put('/notification', setting.notification);
+router.get('/setting', setting.setting);
 
 module.exports = router;

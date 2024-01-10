@@ -21,7 +21,9 @@ const factoryName = async (req, res) => {
       { factoryName },
       { where: { userId } }
     );
-    res.status(200).json({ message: "Factory Name updated successfully" });
+    res.status(200).json({ 
+      success: true,
+      message: "Factory Name updated successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -43,7 +45,9 @@ const logo = async (req, res) => {
     await saveFile(file, uploadPath);
     logo = path.join("/fm/setting", file.name);
     await All_Models.Setting_Model.update({ logo }, { where: { userId } });
-    res.status(200).json({ message: "Logo updated successfully" });
+    res.status(200).json({ 
+      success: true,
+      message: "Logo updated successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -54,7 +58,9 @@ const colors = async (req, res) => {
     const { userId } = req.user;
     const { colors } = req.body;
     await All_Models.Setting_Model.update({ colors }, { where: { userId } });
-    res.status(200).json({ message: "Colors updated successfully" });
+    res.status(200).json({ 
+      success: true,
+      message: "Colors updated successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -65,7 +71,9 @@ const fontSize = async (req, res) => {
     const { userId } = req.user;
     const { fontSize } = req.body;
     await All_Models.Setting_Model.update({ fontSize }, { where: { userId } });
-    res.status(200).json({ message: "Font Size updated successfully" });
+    res.status(200).json({ 
+      success: true,
+      message: "Font Size updated successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -79,7 +87,21 @@ const notification = async (req, res) => {
       { notification },
       { where: { userId } }
     );
-    res.status(200).json({ message: "Notification updated successfully" });
+    res.status(200).json({ 
+      success: true,
+      message: "Notification updated successfully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const setting = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const setting = await All_Models.Setting_Model.findOne({
+      where: { userId },
+    });
+    res.status(200).json({ setting });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -91,4 +113,5 @@ module.exports = {
   colors,
   fontSize,
   notification,
+  setting
 };
