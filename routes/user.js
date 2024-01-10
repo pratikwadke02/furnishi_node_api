@@ -8,4 +8,7 @@ router.put('/login', user.login);
 router.post('/sendOtp', user.userEmailLogin);
 router.put('/verifyOtp', user.verifyOtp);
 
+router.post('/sendAssistantUserOtp', user.assistantUserEmailLogin);
+router.put('/verifyAssistantUserOtp', user.assistantUserVerifyOtp);
+
 module.exports = router;

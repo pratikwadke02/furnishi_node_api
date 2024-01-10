@@ -110,7 +110,6 @@ exports.userEmailLogin = async (req, res, next) => {
         if(!otp){
             return res.status(500).json({ errors: "Something went wrong. Please try again" });
         }
-        console.log(expiryDatetime);
         if(storedOtp){
             storedOtp.otp = otp;
             storedOtp.expiryTime = expiryDatetime;
@@ -155,6 +154,9 @@ exports.verifyOtp = async (req, res, next) => {
             where: whereClause
         });
         if(!storedOtp){
+            return res.status(404).json({error: "OTP not found"});
+        }
+        if(storedOtp.otp != otp){
             return res.status(404).json({error: "OTP not matched"});
         }
         if(storedOtp.expiryTime < Date.now()){
@@ -199,6 +201,113 @@ exports.verifyOtp = async (req, res, next) => {
                 role: user.role,
                 mobileNumber: user.mobileNumber,
                 emailId: user.emailId,
+            },
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        });
+    }catch(error){
+        console.log(error);
+        res.status(500).json({error: error.message});
+    }
+}
+
+exports.assistantUserEmailLogin = async (req, res, next) => {
+    try{
+        const {emailId, role, } = req.body;
+        if(role != "assistantUser"){
+            return res.status(400).json({error: "Assistant User role is required"});
+        }
+        let storedOtp = await AllModels.Otp_Model.findOne({
+            where: {
+                emailId,
+                role,
+            }
+        });
+        const {otp, expiryDatetime} = OTP_GEN.OTP_GENERATE();
+        if(!otp){
+            return res.status(500).json({ errors: "Something went wrong. Please try again" });
+        }
+        if(storedOtp){
+            storedOtp.otp = otp;
+            storedOtp.expiryTime = expiryDatetime;
+            await storedOtp.save();
+        }
+        else{
+            await AllModels.Otp_Model.create({
+                emailId,
+                role,
+                otp,
+                expiryTime: expiryDatetime,
+            });
+        }
+        const subject = "OTP for Login";
+        const body = `Your OTP for login is ${otp}`;
+        // const sendMail = await Send_Mail(emailId, null, subject, body);
+        // if(!sendMail){
+        //     return res.status(500).json({ errors: "Something went wrong. Please try again" });
+        // }
+        res.status(200).json({message: "OTP sent successfully", otp: otp});
+    }catch(error){
+        console.log(error);
+        res.status(500).json({error: error.message});
+    }
+}
+
+exports.assistantUserVerifyOtp = async (req, res, next) => {
+    try{
+        const {emailId, role, otp} = req.body;
+        if(role != "assistantUser"){
+            return res.status(400).json({error: "Assistant User role is required"});
+        }
+        let whereClause = {};
+        if(emailId){
+            whereClause.emailId = emailId;
+        }
+        if(role){
+            whereClause.role = role;
+        }
+        let storedOtp = await AllModels.Otp_Model.findOne({
+            where: whereClause
+        });
+        if(!storedOtp){
+            return res.status(404).json({error: "OTP not found"});
+        }
+        if(storedOtp.otp != otp){
+            return res.status(404).json({error: "OTP not matched"});
+        }
+        if(storedOtp.expiryTime < Date.now()){
+            return res.status(404).json({error: "OTP expired"});
+        }
+        let assistantUser = await AllModels.AssistantUser_Model.findOne({
+            where: {
+                emailId,
+            }
+        });
+        if(!assistantUser){
+            return res.status(404).json({error: "Assistant User not found"});
+        }
+        const accessToken = jwt.sign({userId: assistantUser.id, role: role, emailId: assistantUser.emailId}, process.env.JWT_SECRET, {expiresIn: "30d"});
+        const refreshToken = jwt.sign({userId: assistantUser.id, role: role, emailId: assistantUser.emailId}, process.env.JWT_REFRESH_SECRET, {expiresIn: "30d"});
+        res.cookie("RTjwt", refreshToken, {
+            httpOnly: true,
+            maxAge: 30*24*60*60*1000, //30 days
+            sameSite: "none",
+            secure: true,
+        });
+        res.cookie("ATjwt", accessToken, {
+            httpOnly: true,
+            maxAge: 30*24*60*60*1000, //30 days
+            sameSite: "none",
+            secure: true,
+        });
+        return res.status(200).json({
+            message: "Login Successful",
+            user: {
+                id: assistantUser.id,
+                name: assistantUser.name,
+                role: role,
+                mobileNumber: assistantUser.mobileNumber,
+                emailId: assistantUser.emailId,
             },
             accessToken: accessToken,
             refreshToken: refreshToken
