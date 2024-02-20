@@ -58,6 +58,9 @@ const Models = {
 
     //settings
     Setting_Model: require('../model/settings.model'),
+
+    //work partner
+    WorkPartner_Model: require('../model/work.partner.model'),
 }
 
 module.exports = Models;

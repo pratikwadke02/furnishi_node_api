@@ -66,16 +66,12 @@ exports.login = async (req, res) => {
 
         res.cookie("RTjwt", refreshToken, {
             httpOnly: true,
-            maxAge: 30*24*60*60*1000, //30 days
-            sameSite: "none",
-            secure: true,
+            maxAge: 30*24*60*60*1000,
         });
 
         res.cookie("ATjwt", accessToken, {
             httpOnly: true,
-            maxAge: 30*24*60*60*1000, //30 days
-            sameSite: "none",
-            secure: true,
+            maxAge: 30*24*60*60*1000, 
         });
 
         res.status(200).json({
@@ -180,16 +176,12 @@ exports.verifyOtp = async (req, res, next) => {
 
         res.cookie("RTjwt", refreshToken, {
             httpOnly: true,
-            maxAge: 30*24*60*60*1000, //30 days
-            sameSite: "none",
-            secure: true,
+            maxAge: 30*24*60*60*1000, 
         });
 
         res.cookie("ATjwt", accessToken, {
             httpOnly: true,
-            maxAge: 30*24*60*60*1000, //30 days
-            sameSite: "none",
-            secure: true,
+            maxAge: 30*24*60*60*1000,
         });
 
         return res.status(200).json({
@@ -290,15 +282,11 @@ exports.assistantUserVerifyOtp = async (req, res, next) => {
         const refreshToken = jwt.sign({userId: assistantUser.id, role: role, emailId: assistantUser.emailId}, process.env.JWT_REFRESH_SECRET, {expiresIn: "30d"});
         res.cookie("RTjwt", refreshToken, {
             httpOnly: true,
-            maxAge: 30*24*60*60*1000, //30 days
-            sameSite: "none",
-            secure: true,
+            maxAge: 30*24*60*60*1000, 
         });
         res.cookie("ATjwt", accessToken, {
             httpOnly: true,
-            maxAge: 30*24*60*60*1000, //30 days
-            sameSite: "none",
-            secure: true,
+            maxAge: 30*24*60*60*1000,
         });
         return res.status(200).json({
             message: "Login Successful",
@@ -308,6 +296,109 @@ exports.assistantUserVerifyOtp = async (req, res, next) => {
                 role: role,
                 mobileNumber: assistantUser.mobileNumber,
                 emailId: assistantUser.emailId,
+            },
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        });
+    }catch(error){
+        console.log(error);
+        res.status(500).json({error: error.message});
+    }
+}
+
+exports.workPartnerMobileLogin = async (req, res, next) => {
+    try{
+        const {mobileNumber, role, } = req.body;
+        if(role != "workPartner"){
+            return res.status(400).json({error: "Work Partner role is required"});
+        }
+        let storedOtp = await AllModels.Otp_Model.findOne({
+            where: {
+                mobileNumber,
+                role,
+            }
+        });
+        const {otp, expiryDatetime} = OTP_GEN.OTP_GENERATE();
+        if(!otp){
+            return res.status(500).json({ errors: "Something went wrong. Please try again" });
+        }
+        if(storedOtp){
+            storedOtp.otp = otp;
+            storedOtp.expiryTime = expiryDatetime;
+            await storedOtp.save();
+        }
+        else{
+            await AllModels.Otp_Model.create({
+                mobileNumber,
+                role,
+                otp,
+                expiryTime: expiryDatetime,
+            });
+        }
+
+        //write code for sending sms here
+
+        res.status(200).json({message: "OTP sent successfully", otp: otp});
+    }catch(error){
+        console.log(error);
+        res.status(500).json({error: error.message});
+    }
+}
+
+exports.workPartnerVerifyOtp = async (req, res, next) => {
+    try{
+        const {mobileNumber, role, otp} = req.body;
+        if(role != "workPartner"){
+            return res.status(400).json({error: "Work Partner role is required"});
+        }
+        let whereClause = {};
+        if(mobileNumber){
+            whereClause.mobileNumber = mobileNumber;
+        }
+        if(role){
+            whereClause.role = role;
+        }
+        let storedOtp = await AllModels.Otp_Model.findOne({
+            where: whereClause
+        });
+        if(!storedOtp){
+            return res.status(404).json({error: "OTP not found"});
+        }
+        if(storedOtp.otp != otp){
+            return res.status(404).json({error: "OTP not matched"});
+        } 
+        if(storedOtp.expiryTime < Date.now()){
+            return res.status(404).json({error: "OTP expired"});
+        }
+        let workPartner = await AllModels.WorkPartner_Model.findOne({
+            where: {
+                mobileNumber,
+            }
+        });
+        if(!workPartner){
+            workPartner = await AllModels.WorkPartner_Model.create({
+                mobileNumber,
+            });
+        }
+        const accessToken = jwt.sign({userId: workPartner.id, role: role, mobileNumber: workPartner.mobileNumber}, process.env.JWT_SECRET, {expiresIn: "30d"});
+        const refreshToken = jwt.sign({userId: workPartner.id, role: role, mobileNumber: workPartner.mobileNumber}, process.env.JWT_REFRESH_SECRET, {expiresIn: "30d"});
+        res.cookie("RTjwt", refreshToken, {
+            httpOnly: true,
+            maxAge: 30*24*60*60*1000, 
+        });
+        res.cookie("ATjwt", accessToken, {
+            httpOnly: true,
+            maxAge: 30*24*60*60*1000, 
+        });
+
+        return res.status(200).json({
+            message: "Login Successful",
+            user: {
+                id: workPartner.id,
+                name: workPartner.name,
+                role: role,
+                mobileNumber: workPartner.mobileNumber,
+                emailId: workPartner.emailId,
             },
             accessToken: accessToken,
             refreshToken: refreshToken

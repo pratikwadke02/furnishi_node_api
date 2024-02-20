@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
+const {tokenVerify} = require("./middleware/tokenVerify");
 
 const app = express();
 const cors = require("cors");
@@ -9,9 +10,7 @@ const cors = require("cors");
 require("dotenv").config();
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000"
-    ],
+    origin: true,
     credentials: true,
   })
 );
@@ -56,14 +55,16 @@ app.use((error, req, res, next) => {
   res.status(statusCode).json({ message: errorMessage });
 }); //End of error handling middleware
 
-const dbConnection = require("./utils/dbConnection");
-
 require("./utils/allFurnishiRoutes")(app);
 require("./utils/allAdminRoutes")(app);
+require("./utils/allAssistantUserRoutes")(app);
 require("./utils/allFactoryManagerRoutes")(app);
+// require("./utils/allWorkPartnerRoutes")(app);
+
 //ModelRelationship Define
 require("./utils/allModelRelationship").All_Table_Relationship();
 
+const dbConnection = require("./utils/dbConnection");
 
 dbConnection.sync();
 

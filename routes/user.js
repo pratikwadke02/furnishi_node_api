@@ -11,4 +11,7 @@ router.put('/verifyOtp', user.verifyOtp);
 router.post('/sendAssistantUserOtp', user.assistantUserEmailLogin);
 router.put('/verifyAssistantUserOtp', user.assistantUserVerifyOtp);
 
+router.put('/sendWorkPartnerOtp', user.workPartnerMobileLogin);
+router.put('/verifyWorkPartnerOtp', user.workPartnerVerifyOtp);
+
 module.exports = router;
