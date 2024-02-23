@@ -24,7 +24,7 @@ const getAccess = async (req, res) => {
             where: {
                 id: user.userId,
             },
-            attributes: ["firstName", "lastName", "mobileNumber", "emailId"]
+            attributes: ["id", "firstName", "lastName", "mobileNumber", "emailId"]
         });
 
         return res.status(200).json({ user, managerDetails });

@@ -1,7 +1,5 @@
 const sequelize = require("./dbConnection");
 const Models = require("./allModels");
-const { Model } = require("sequelize");
-const Setting_Model = require("../model/settings.model");
 
 exports.All_Table_Relationship = async () => {
   /**
@@ -302,7 +300,14 @@ exports.All_Table_Relationship = async () => {
     Models.SalesPerson_Model.hasMany(Models.Orderlist_Model);
 
     //setting belongs to user
-    Models.Setting_Model.belongsTo(Models.User_Model);
+    Models.Setting_Model.belongsTo(Models.User_Model, {
+        as: "user"
+    });
+
+    //setting belongs to assistant user
+    Models.Setting_Model.belongsTo(Models.AssistantUser_Model, {
+        as: "assistantUser"
+    });
 
     
     try {

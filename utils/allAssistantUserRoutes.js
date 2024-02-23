@@ -6,6 +6,8 @@ const AllAssistantUser_Routes = (app) => {
         "/au",
         require("../assistantUser/routes/access"),
         require("../assistantUser/routes/order"),
+        require("../assistantUser/routes/location"),
+        require("../assistantUser/routes/settings"),
     )
 };
 

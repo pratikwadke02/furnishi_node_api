@@ -63,6 +63,20 @@ const addAssistantUser = async (req, res) => {
             panelControlId: panelControl.id,
             userId
         });
+        const ManagerSettings = await All_Models.Setting_Model.findOne({
+            where: { userId }
+        });
+        //copy the settings of the manager to the assistant user
+        const newSettings = await All_Models.Setting_Model.create({
+            factoryName: ManagerSettings.factoryName,
+            logo: ManagerSettings.logo,
+            color: ManagerSettings.color,
+            fontSize: ManagerSettings.fontSize,
+            notification: ManagerSettings.notification,
+            assistantUserId: newAssistantUser.id,
+            userId
+        });
+        
         res.status(200).json({
             success: true,
             message: "Assistant User added successfully",
