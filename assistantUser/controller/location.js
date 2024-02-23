@@ -2,16 +2,10 @@ const All_Models = require("../../utils/allModels");
 
 const getLocation = async (req, res) => {
     try{
-        const {userId} = req.user;
-        const managerDetails = await All_Models.User_Model.findOne({
-            where: {
-                id: userId,
-            },
-            attributes: ["id", "firstName", "lastName", "mobileNumber", "emailId"]
-        });
+        const {userId, managerId} = req.user;
         const locations = await All_Models.Location_Model.findAll({
             where: {
-                userId: managerDetails.id
+                userId: managerId
             }
         });
         if (!locations) {

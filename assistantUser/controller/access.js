@@ -2,7 +2,7 @@ const All_Models = require("../../utils/allModels");
 
 const getAccess = async (req, res) => {
     try {
-        const { userId } = req.user;
+        const { userId, managerId} = req.user;
         
         const user = await All_Models.AssistantUser_Model.findOne({
             where: {
@@ -22,7 +22,7 @@ const getAccess = async (req, res) => {
 
         const managerDetails = await All_Models.User_Model.findOne({
             where: {
-                id: user.userId,
+                id: managerId,
             },
             attributes: ["id", "firstName", "lastName", "mobileNumber", "emailId"]
         });

@@ -278,8 +278,8 @@ exports.assistantUserVerifyOtp = async (req, res, next) => {
         if(!assistantUser){
             return res.status(404).json({error: "Assistant User not found"});
         }
-        const accessToken = jwt.sign({userId: assistantUser.id, role: role, emailId: assistantUser.emailId}, process.env.JWT_SECRET, {expiresIn: "30d"});
-        const refreshToken = jwt.sign({userId: assistantUser.id, role: role, emailId: assistantUser.emailId}, process.env.JWT_REFRESH_SECRET, {expiresIn: "30d"});
+        const accessToken = jwt.sign({userId: assistantUser.id, role: role, emailId: assistantUser.emailId, managerId: assistantUser.userId}, process.env.JWT_SECRET, {expiresIn: "30d"});
+        const refreshToken = jwt.sign({userId: assistantUser.id, role: role, emailId: assistantUser.emailId, managerId: assistantUser.userId}, process.env.JWT_REFRESH_SECRET, {expiresIn: "30d"});
         res.cookie("RTjwt", refreshToken, {
             httpOnly: true,
             maxAge: 30*24*60*60*1000, 
