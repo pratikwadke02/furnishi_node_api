@@ -1,13 +1,22 @@
 const getAllCordinator = async (req, res) => {
     try {
         const {userId, managerId} = req.user;
+        console.log(req.user);
         const{id, cordinatorTypeId}=req.query;
-        let whereClause = {managerId};
+        let whereClause = {
+            userId: managerId
+        };
         if(id){
-            whereClause = {id, managerId};
+            whereClause = {
+                id,
+                userId: managerId
+            };
         }
         if(cordinatorTypeId){
-            whereClause = {managerId, cordinatorTypeId};
+            whereClause = {
+                cordinatorTypeId,
+                userId: managerId
+            };
         }
         const allCordinator = await All_Models.Cordinator_Model.findAll({
             where: whereClause,
@@ -27,8 +36,13 @@ const getAllCordinator = async (req, res) => {
             data: allCordinator
         });
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             error: error.message
         })
     }
+}
+
+module.exports = {
+    getAllCordinator
 }
