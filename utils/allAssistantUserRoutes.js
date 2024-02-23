@@ -9,7 +9,8 @@ const AllAssistantUser_Routes = (app) => {
         require("../assistantUser/routes/location"),
         require("../assistantUser/routes/settings"),
         require("../assistantUser/routes/cordinator"),
-        require("../assistantUser/routes/product")
+        require("../assistantUser/routes/product"),
+        require("../assistantUser/routes/dashboard"),
     )
 };
 

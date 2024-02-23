@@ -16,7 +16,7 @@ async function saveFile(file, uploadPath) {
 const getAssignedOrders = async (req, res) => {
   try {
     const { userId } = req.user;
-    const assignedOrders = await All_Models.AssistantUser_Model.findOne({
+    const assignedOrders = await All_Models.AssistantUser_Model.findAll({
       where: {
         id: userId,
       },
@@ -374,8 +374,26 @@ const updateOrder = async (req, res) => {
   }
 };
 
+const getAssignedOrdersCount = async (req, res) => {
+  try{
+    const { userId } = req.user;
+    const assignedOrdersCount = await All_Models.AssistantUserOrder_Model.count({
+      where: {
+        assistantUserId: userId,
+      },
+    });
+    return res.status(200).json({ 
+      success: true,
+      message: "Assigned orders count",
+      assignedOrdersCount });
+  }catch(error){
+    return res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   getAssignedOrders,
   getOrderDetails,
   updateOrder,
+  getAssignedOrdersCount,
 };
