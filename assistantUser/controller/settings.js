@@ -3,7 +3,7 @@ const All_Models = require("../../utils/allModels");
 const getSettings = async (req, res) => {
   try {
     const { userId } = req.user;
-    const settings = await All_Models.Settings_Model.findOne({
+    const settings = await All_Models.Setting_Model.findOne({
       where: {
         assistantUserId: userId,
       },
