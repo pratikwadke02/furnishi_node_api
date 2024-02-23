@@ -309,6 +309,20 @@ exports.All_Table_Relationship = async () => {
         as: "assistantUser"
     });
 
+    //work partner can be individual or contractor
+    //contractor has many individual
+    //individual belongs to many contractor
+
+    Models.WorkPartner_Model.belongsToMany(Models.WorkPartner_Model, {
+        through: { 
+            model: Models.ContractorIndividual_Model,
+        },
+            as: "relatedPartners",
+            foreignKey: 'contractorId',
+            otherKey: 'individualId'
+    });
+
+
     
     try {
 

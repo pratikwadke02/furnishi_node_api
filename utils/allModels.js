@@ -61,6 +61,7 @@ const Models = {
 
     //work partner
     WorkPartner_Model: require('../model/work.partner.model'),
+    ContractorIndividual_Model: require('../model/contractor.individual.model'),
 }
 
 module.exports = Models;

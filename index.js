@@ -59,7 +59,7 @@ require("./utils/allFurnishiRoutes")(app);
 require("./utils/allAdminRoutes")(app);
 require("./utils/allAssistantUserRoutes")(app);
 require("./utils/allFactoryManagerRoutes")(app);
-// require("./utils/allWorkPartnerRoutes")(app);
+require("./utils/allWorkPartnerRoutes")(app);
 
 //ModelRelationship Define
 require("./utils/allModelRelationship").All_Table_Relationship();

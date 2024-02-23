@@ -7,6 +7,7 @@ const WorkPartner_Model = dbConnection.define('workPartner', {
     mobileNumber: sequelize.STRING,
     emailId: sequelize.STRING,
     profile: sequelize.STRING,
+    type: sequelize.ENUM('Individual', 'Contractor'),
 });
 
 module.exports = WorkPartner_Model;
