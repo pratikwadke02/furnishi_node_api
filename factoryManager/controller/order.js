@@ -100,7 +100,6 @@ const addOrder = async (req, res) => {
       order: newOrder,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       error: error.message,
     });
@@ -194,7 +193,6 @@ const getAllOrder = async (req, res) => {
       data: allOrder,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       error: error.message,
     });

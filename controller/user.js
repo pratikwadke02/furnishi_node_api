@@ -36,7 +36,6 @@ exports.signup = async (req, res) => {
         
         res.status(201).json({success:true, message: "User created successfully"});
     }catch(error){
-        console.log(error);
         res.status(500).json({error: error.message});
     }
 }
@@ -88,7 +87,7 @@ exports.login = async (req, res) => {
             refreshToken: refreshToken
         });
     }catch(error){
-        console.log(error);
+        
         res.status(500).json({error: error.message});
     }
 }
@@ -127,7 +126,7 @@ exports.userEmailLogin = async (req, res, next) => {
         // }
         res.status(200).json({message: "OTP sent successfully", otp: otp});
     }catch(error){
-        console.log(error);
+        
         res.status(500).json({error: error.message});
     }
 }
@@ -198,7 +197,7 @@ exports.verifyOtp = async (req, res, next) => {
             refreshToken: refreshToken
         });
     }catch(error){
-        console.log(error);
+        
         res.status(500).json({error: error.message});
     }
 }
@@ -240,7 +239,7 @@ exports.assistantUserEmailLogin = async (req, res, next) => {
         // }
         res.status(200).json({message: "OTP sent successfully", otp: otp});
     }catch(error){
-        console.log(error);
+        
         res.status(500).json({error: error.message});
     }
 }
@@ -301,7 +300,7 @@ exports.assistantUserVerifyOtp = async (req, res, next) => {
             refreshToken: refreshToken
         });
     }catch(error){
-        console.log(error);
+        
         res.status(500).json({error: error.message});
     }
 }
@@ -340,7 +339,7 @@ exports.workPartnerMobileLogin = async (req, res, next) => {
 
         res.status(200).json({message: "OTP sent successfully", otp: otp});
     }catch(error){
-        console.log(error);
+        
         res.status(500).json({error: error.message});
     }
 }
@@ -404,7 +403,7 @@ exports.workPartnerVerifyOtp = async (req, res, next) => {
             refreshToken: refreshToken
         });
     }catch(error){
-        console.log(error);
+        
         res.status(500).json({error: error.message});
     }
 }

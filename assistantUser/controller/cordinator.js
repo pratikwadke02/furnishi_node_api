@@ -1,7 +1,6 @@
 const getAllCordinator = async (req, res) => {
     try {
         const {userId, managerId} = req.user;
-        console.log(req.user);
         const{id, cordinatorTypeId}=req.query;
         let whereClause = {
             userId: managerId
@@ -36,7 +35,6 @@ const getAllCordinator = async (req, res) => {
             data: allCordinator
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             error: error.message
         })

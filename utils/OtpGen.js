@@ -7,8 +7,6 @@ exports.OTP_GENERATE = () =>
     //keep 30 minutes expiry time
     expiryDatetime.setMinutes(expiryDatetime.getMinutes() + 30);
 
-    console.log(expiryDatetime);
-
     /*******************  END OF  GENERATING TIME  **************** */
 
     // GENERATING OTP between 1000 to 9999 (4 digits)

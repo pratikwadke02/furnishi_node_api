@@ -22,7 +22,6 @@ const addSnaglist = async (req, res) => {
     }
     const files = req.files;
     const { attachmentFile, photoFile, videoFile } = files;
-    console.log(attachmentFile, photoFile, videoFile);
     let attachment;
     let photo;
     let video;
@@ -122,7 +121,6 @@ const addSnaglist = async (req, res) => {
       data: newSnaglist,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       error: error.message,
     });

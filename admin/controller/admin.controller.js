@@ -11,10 +11,8 @@ const SALT = 10;
 
 exports.register = async (req, res) => {
     try{
-    console.log(req.body);
     const { error } = register.registerValidate(req.body);
     if (error) {
-        console.log(error);
         return res.status(400).send(error.details[0].message);
     }
     const isUser = await User.findOne({
@@ -41,7 +39,6 @@ exports.register = async (req, res) => {
         authToken: authToken
     });
 }catch(err){
-    console.log(err);
     res.status(500).send(err);
 }
     
@@ -51,7 +48,6 @@ exports.login = async (req, res) => {
     try{
         const {error} = login.loginValidate(req.body);
         if(error){
-            console.log(error);
             return res.status(400).send(error.details[0].message);
         }
         const user = await User.findOne({
@@ -76,7 +72,6 @@ exports.login = async (req, res) => {
             authToken: authToken
         });
     }catch(error){
-        console.log(error);
         res.status(500).send(error);
     }
 }
@@ -86,7 +81,6 @@ exports.findAll = async (req, res) => {
         const users = await User.findAll();
         res.send(users);
     }catch(error){
-        console.log(error);
         res.status(500).send(error);
     }
 }
