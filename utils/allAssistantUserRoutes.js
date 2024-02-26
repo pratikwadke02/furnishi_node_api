@@ -11,6 +11,7 @@ const AllAssistantUser_Routes = (app) => {
         require("../assistantUser/routes/cordinator"),
         require("../assistantUser/routes/product"),
         require("../assistantUser/routes/dashboard"),
+        require("../assistantUser/routes/status"),
     )
 };
 
