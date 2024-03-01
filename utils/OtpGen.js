@@ -9,8 +9,8 @@ exports.OTP_GENERATE = () =>
 
     /*******************  END OF  GENERATING TIME  **************** */
 
-    // GENERATING OTP between 1000 to 9999 (4 digits)
-    let uniqueNum = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
+    // GENERATING OTP between 100000 to 999999 (6 digits)
+    const uniqueNum = Math.floor(100000 + Math.random() * 900000);
     //Math.floor(Math.random() * (max - min + 1) + min)
 
     return { otp: uniqueNum, expiryDatetime };
