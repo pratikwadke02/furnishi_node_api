@@ -55,6 +55,18 @@ const getSnaglistHistory = async (req, res) => {
         const snaglistHistory = await All_Models.SnaglistHistory_Model.findAll({
             where: whereClause
         });
+        //find all the user from updatedById column
+        const updatedBy = snaglistHistory.map(snaglist => snaglist.updatedById);
+        const users = await All_Models.User_Model.findAll({
+            where: {
+                id: updatedBy
+            }
+        });
+        //map the user with snaglistHistory
+        snaglistHistory.forEach(snaglist => {
+            let user = users.find(user => user.id === snaglist.updatedById);
+            snaglist.dataValues.updatedBy = user;
+        });
         res.status(200).json({
             message: "Snaglist History",
             data: snaglistHistory
